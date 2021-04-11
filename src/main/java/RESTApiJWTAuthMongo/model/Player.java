@@ -1,21 +1,19 @@
 package RESTApiJWTAuthMongo.model;
 
-//import java.io.Serializable;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
-//@EntityScan
 @Document(collection ="player")
-public class Player { //implements Serializable
+public class Player implements Serializable {
 
 	@Id	
 	private String playerId;
@@ -31,11 +29,10 @@ public class Player { //implements Serializable
 	private double winRate;
 		
 	
-//	@Temporal(value = TemporalField.TIMESTAMP)	
+	//	@Temporal(value = TemporalField.TIMESTAMP)	
 	@Field (name = "registration_date")      //, updatable = false
 	private LocalDateTime registrationDate;
 	
-	//@JsonManagedReference
 	@DBRef 	
 	private List<DiceRoll> diceRolls = new ArrayList<>();
 	

@@ -1,5 +1,7 @@
 package RESTApiJWTAuthMongo.controllers;
 
+import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -99,6 +101,8 @@ public class PlayerController {
 					.withTitle("Please introduce a different name.")
 					.withDetail("There is an existing player with that name."));
 		}
+		
+		newPlayer.setRegistrationDate(LocalDateTime.now());
 			
 		EntityModel<Player> entityModel = playerAssembler.toModel(playerRepository.insert(newPlayer));
 
@@ -110,7 +114,9 @@ public class PlayerController {
 	@PostMapping(path="/players/{playerId}/games") 
 	public ResponseEntity<EntityModel<DiceRoll>> newThrow(@PathVariable(name = "playerId") String playerId) {
 				
-		Player playerThrowing= playerRepository.findById(playerId).orElseThrow(() -> new PlayerNotFoundException(playerId));
+		Player playerThrowing= playerRepository.findById(playerId)
+				.orElseThrow(() -> new PlayerNotFoundException(playerId));
+		
 		DiceRoll newDiceRoll = new DiceRoll (playerThrowing);
 		playerThrowing.getDiceRolls().add(newDiceRoll);
 		playerThrowing.setWinRate(playerThrowing.calculateWinRate(playerThrowing));
@@ -125,7 +131,8 @@ public class PlayerController {
 	@PutMapping("/players/{playerId}")
 	public ResponseEntity<?> updatePlayer(@RequestBody Player newPlayer, @PathVariable String playerId) {
 
-		Player updatedPlayer = playerRepository.findById(playerId).orElseThrow(() -> new PlayerNotFoundException(playerId));
+		Player updatedPlayer = playerRepository.findById(playerId)
+				.orElseThrow(() -> new PlayerNotFoundException(playerId));
 		
 		if (playerRepository.findByPlayerName(newPlayer.getPlayerName()).isPresent()) {
 				
@@ -150,10 +157,9 @@ public class PlayerController {
 		Player player = playerRepository.findById(playerId).orElseThrow(() -> new PlayerNotFoundException(playerId));
 		
 		List <DiceRoll> diceRolls = player.getDiceRolls();
-		playerRepository.findById(playerId).get().getDiceRolls().removeAll(diceRolls);
-		//diceRollRepository.delete((DiceRoll) diceRolls);
-		
+		diceRollRepository.deleteAll(diceRolls);
 		player.setWinRate(0.0);
+		player.setDiceRolls(Collections.<DiceRoll>emptyList());
 		playerRepository.save(player);
 		
 		return ResponseEntity.noContent().build();
@@ -162,10 +168,12 @@ public class PlayerController {
 	//Deletes a player by id
 	@DeleteMapping("/players/{playerId}")
 	public ResponseEntity<?> deletePlayer(@PathVariable String playerId) {
-
+		
 		playerRepository.findById(playerId).orElseThrow(() -> new PlayerNotFoundException(playerId));
-		playerRepository.deleteById(playerId);
-
+		List <DiceRoll> diceRolls = playerRepository.findById(playerId).get().getDiceRolls();
+		diceRollRepository.deleteAll(diceRolls);
+		playerRepository.delete(playerRepository.findById(playerId).get());
+		
 		return ResponseEntity.noContent().build();
 	}
 	

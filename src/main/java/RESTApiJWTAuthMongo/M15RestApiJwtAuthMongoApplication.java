@@ -10,7 +10,7 @@ import RESTApiJWTAuthMongo.model.Player;
 import RESTApiJWTAuthMongo.repositories.DiceRollRepository;
 import RESTApiJWTAuthMongo.repositories.PlayerRepository;
 
-@SpringBootApplication// (exclude = { SecurityAutoConfiguration.class })
+@SpringBootApplication  // (exclude = { SecurityAutoConfiguration.class })
 public class M15RestApiJwtAuthMongoApplication implements CommandLineRunner {
 
 	public static void main(String[] args) {

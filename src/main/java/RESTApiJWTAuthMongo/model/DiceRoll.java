@@ -1,15 +1,14 @@
 package RESTApiJWTAuthMongo.model;
 
-//import java.io.Serializable;
+import java.io.Serializable;
 import java.util.Objects;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
-//@Entity
 @Document(collection ="diceroll")
-public class DiceRoll  { //implements Serializable
+public class DiceRoll implements Serializable  { 
 
 	@Id
 	private String diceRollId;
@@ -77,14 +76,6 @@ public class DiceRoll  { //implements Serializable
 	public void setResult(String result) {
 		this.result = result;
 	}
-	
-/*	public Player getPlayer() {
-		return player;
-	}
-
-	public void setPlayer(Player player) {
-		this.player = player;
-	}	*/
 	
 	@Override
 	public boolean equals(Object o) {

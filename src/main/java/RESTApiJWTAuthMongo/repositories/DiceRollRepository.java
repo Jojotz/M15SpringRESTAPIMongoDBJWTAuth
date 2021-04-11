@@ -8,7 +8,5 @@ import RESTApiJWTAuthMongo.model.DiceRoll;
 //@RepositoryRestResource (collectionResourceRel = "diceRoll", path = "diceRoll")
 @Repository
 public interface DiceRollRepository extends MongoRepository<DiceRoll, String> {
-	
-	//List<DiceRoll> findDiceRollsByPlayer (Player player);
 
 }
