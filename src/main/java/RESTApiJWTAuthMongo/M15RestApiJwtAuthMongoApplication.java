@@ -7,6 +7,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import RESTApiJWTAuthMongo.model.DiceRoll;
 import RESTApiJWTAuthMongo.model.Player;
+import RESTApiJWTAuthMongo.repositories.DiceRollRepository;
 import RESTApiJWTAuthMongo.repositories.PlayerRepository;
 
 @SpringBootApplication// (exclude = { SecurityAutoConfiguration.class })
@@ -18,6 +19,9 @@ public class M15RestApiJwtAuthMongoApplication implements CommandLineRunner {
 	
 	@Autowired
 	private PlayerRepository playerRespository;
+	
+	@Autowired
+	private DiceRollRepository diceRollRespository;
 	
 	@Override
 	public void run(String... args) throws Exception {
@@ -47,23 +51,13 @@ public class M15RestApiJwtAuthMongoApplication implements CommandLineRunner {
 		this.playerRespository.save(player2);
 		this.playerRespository.save(player3);
 		this.playerRespository.save(player4);
+		
+		this.diceRollRespository.save(diceRoll1);
+		this.diceRollRespository.save(diceRoll2);
+		this.diceRollRespository.save(diceRoll3);
+		this.diceRollRespository.save(diceRoll4);
+		this.diceRollRespository.save(diceRoll5);
+		this.diceRollRespository.save(diceRoll6);
+		this.diceRollRespository.save(diceRoll7);
 	}  
-
-	
-/*	@Bean
-	CommandLineRunner runner(PlayerService playerService) {
-		return args -> {
-			// read json and write to db
-			ObjectMapper mapper = new ObjectMapper();
-			TypeReference<List<Player>> typeReference = new TypeReference<List<Player>>(){};
-			InputStream inputStream = TypeReference.class.getResourceAsStream("db/player.json");
-			try {
-				List<Player> players = mapper.readValue(inputStream,typeReference);
-				playerService.save(players);
-				System.out.println("Users Saved!");
-			} catch (IOException e){
-				System.out.println("Unable to save users: " + e.getMessage());
-			}
-		};
-	} */
 }
