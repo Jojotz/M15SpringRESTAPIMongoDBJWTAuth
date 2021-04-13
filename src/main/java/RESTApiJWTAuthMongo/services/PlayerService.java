@@ -25,10 +25,10 @@ public class PlayerService implements UserDetailsService {
 		
 		if (foundedPlayer == null) return null;
 		
-		String name = foundedPlayer.getPlayerName();
+		String playerName = foundedPlayer.getPlayerName();
 		String password = foundedPlayer.getPassword();
 				
-		return new User (name, password, emptyList());
+		return new User (playerName, password, emptyList());
 	}	
 	
 }
