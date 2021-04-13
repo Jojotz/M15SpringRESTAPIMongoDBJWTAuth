@@ -12,6 +12,8 @@ import RESTApiJWTAuthMongo.model.Player;
 public interface PlayerRepository extends MongoRepository<Player, String> {
 	
 	//@Query("{'player_name': 0}")
-	Optional<Player> findByPlayerName(String playerName);	
+	Optional<Player> findByPlayerName(String playerName);
+	
+	//Player findByPlayerName (String playerName);
 
 }
