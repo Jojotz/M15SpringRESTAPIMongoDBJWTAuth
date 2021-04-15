@@ -1,34 +1,40 @@
 package RESTApiJWTAuthMongo.services;
 
-import static java.util.Collections.emptyList;
+import java.util.Arrays;
+import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import RESTApiJWTAuthMongo.model.Player;
-import RESTApiJWTAuthMongo.repositories.PlayerRepository;
-
 @Service
 public class PlayerService implements UserDetailsService {
 
-	@Autowired
-	private PlayerRepository playerRepository;
-	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		
-		Player foundedPlayer = playerRepository.findByPlayerName(username).get();
+		List <SimpleGrantedAuthority> roles = null;
 		
-		if (foundedPlayer == null) return null;
+		if (username.equals("admin")) {			
+			roles = Arrays.asList(new SimpleGrantedAuthority ("ROLE_ADMIN"));
+			return new User("admin","admin",roles);
+		}
 		
-		String playerName = foundedPlayer.getPlayerName();
-		String password = foundedPlayer.getPassword();
-				
-		return new User (playerName, password, emptyList());
+		if (username.equals("user")) {			
+			roles = Arrays.asList(new SimpleGrantedAuthority ("ROLE_USER"));
+			return new User("user","user",roles);
+		}
+		
+		if (username.equals("anonymous")) {			
+			roles = Arrays.asList(new SimpleGrantedAuthority ("ROLE_ANONYMOUS"));
+			return new User("anonymous","anonymous",roles);
+		}
+		
+		throw new UsernameNotFoundException("User not found with the name "+ username);
+					
 	}	
 	
 }

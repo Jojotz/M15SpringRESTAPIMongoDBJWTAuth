@@ -1,0 +1,17 @@
+Security Approach for this project:
+
+- 3 distinct roles considered: [user: admin / password: admin] [user: user / password: user] [user: anonymous/ password: anonymous]
+
+- Initial endpoint to get Authentication token: /auth (does not need authentication)
+
+* POST /auth			****
+* GET All players		ADMIN, USER, ANONYMOUS
+* GET a player			ADMIN, USER
+* POST a player			ADMIN
+* POST a diceroll		USER, ANONYMOUS
+* PUT a player			ADMIN
+* DELETE a player		ADMIN
+* DELETE player's dicerolls	ADMIN, USER
+* GET AVG RANKING		ADMIN, USER, ANONYMOUS
+* GET LOSER			ADMIN, USER, ANONYMOUS
+* GET WINNER			ADMIN, USER, ANONYMOUS

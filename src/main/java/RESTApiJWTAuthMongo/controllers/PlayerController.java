@@ -16,6 +16,7 @@ import org.springframework.hateoas.Link;
 import org.springframework.hateoas.mediatype.problem.Problem;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -52,6 +53,7 @@ public class PlayerController {
 	private RankingModelAssembler rankingAssembler;
 		
 	//Gets all players
+	@PreAuthorize("hasRole('USER') OR hasRole('ADMIN') OR hasRole('ANONYMOUS')")
 	@GetMapping("/players/")
 	public CollectionModel<EntityModel<Player>> all() {
 
@@ -62,6 +64,7 @@ public class PlayerController {
 	}
 	
 	//Gets a player by id
+	@PreAuthorize("hasRole('USER') OR hasRole('ADMIN')")
 	@GetMapping("/players/{playerId}") 
 	public EntityModel<Player> onePlayer(@PathVariable String playerId) {
 
@@ -71,6 +74,7 @@ public class PlayerController {
 	}
 		
 	//Gets all dicerolls from a player by id
+	@PreAuthorize("hasRole('USER') OR hasRole('ADMIN')")
 	@GetMapping(value = "/players/{playerId}/games", produces = { "application/hal+json" })
 	public CollectionModel<DiceRoll> getAllDiceThrows(@PathVariable(name = "playerId") String playerId) {
 	    		
@@ -89,6 +93,7 @@ public class PlayerController {
 	}
 	
 	//Creates a player
+	@PreAuthorize("hasRole('ADMIN')")
 	@PostMapping(path="/players", consumes = "application/json")  // consumes=MediaType.APPLICATION_JSON_VALUE
 	public ResponseEntity<?> newPlayer(@RequestBody Player newPlayer) {
 	
@@ -111,6 +116,7 @@ public class PlayerController {
 	}
 	
 	//Creates a diceroll
+	@PreAuthorize("hasRole('USER') OR hasRole('ADMIN')")
 	@PostMapping(path="/players/{playerId}/games") 
 	public ResponseEntity<EntityModel<DiceRoll>> newThrow(@PathVariable(name = "playerId") String playerId) {
 				
@@ -128,6 +134,7 @@ public class PlayerController {
 	} 
 	
 	//Updates a player
+	@PreAuthorize("hasRole('ADMIN')")
 	@PutMapping("/players/{playerId}")
 	public ResponseEntity<?> updatePlayer(@RequestBody Player newPlayer, @PathVariable String playerId) {
 
@@ -151,6 +158,7 @@ public class PlayerController {
 	}
 	
 	//Deletes all dicerolls from a player by id
+	@PreAuthorize("hasRole('USER') OR hasRole('ADMIN')")
 	@DeleteMapping("/players/{playerId}/games")
 	public ResponseEntity<?> deleteDiceRolls(@PathVariable String playerId) {
 		
@@ -166,6 +174,7 @@ public class PlayerController {
 	}
 	
 	//Deletes a player by id
+	@PreAuthorize("hasRole('ADMIN')")
 	@DeleteMapping("/players/{playerId}")
 	public ResponseEntity<?> deletePlayer(@PathVariable String playerId) {
 		
@@ -178,6 +187,7 @@ public class PlayerController {
 	}
 	
 	//Gets average WinRate for all the players
+	@PreAuthorize("hasRole('USER') OR hasRole('ADMIN') OR hasRole('ANONYMOUS')")
 	@GetMapping("/players/ranking") 
 	public ResponseEntity<EntityModel<Ranking>> averageWinRate() {
 		
@@ -194,6 +204,7 @@ public class PlayerController {
 	}
 	
 	//Gets the player with the worst WinRate
+	@PreAuthorize("hasRole('USER') OR hasRole('ADMIN') OR hasRole('ANONYMOUS')")
 	@GetMapping("/players/ranking/loser") 
 	public EntityModel<Player> loserPlayer() {
 		
@@ -205,6 +216,7 @@ public class PlayerController {
 	}
 	
 	//Gets the player with the best WinRate
+	@PreAuthorize("hasRole('USER') OR hasRole('ADMIN') OR hasRole('ANONYMOUS')")
 	@GetMapping("/players/ranking/winner") 
 	public EntityModel<Player> winnerPlayer() {
 		

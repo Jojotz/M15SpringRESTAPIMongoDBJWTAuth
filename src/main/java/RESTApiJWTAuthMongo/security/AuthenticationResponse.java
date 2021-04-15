@@ -18,7 +18,6 @@ public class AuthenticationResponse {
 
 	public void setResponse(String response) {
 		this.response = response;
-	}
-	
+	}	
 	
 }

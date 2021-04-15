@@ -7,7 +7,6 @@ import org.springframework.stereotype.Repository;
 
 import RESTApiJWTAuthMongo.model.Player;
 
-//@RepositoryRestResource (collectionResourceRel = "player", path = "player")
 @Repository
 public interface PlayerRepository extends MongoRepository<Player, String> {
 	

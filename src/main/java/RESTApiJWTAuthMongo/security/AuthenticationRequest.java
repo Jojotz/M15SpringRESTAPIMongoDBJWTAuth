@@ -2,20 +2,26 @@ package RESTApiJWTAuthMongo.security;
 
 public class AuthenticationRequest {
 
-	private String playerName;
+	private String userName;
 	
 	private String password;
 
 	public AuthenticationRequest() {
 		
 	}
-
-	public String gePlayerName() {
-		return playerName;
+	
+	public AuthenticationRequest(String userName, String password) {
+		super();
+		this.userName = userName;
+		this.password = password;
 	}
 
-	public void setPlayerName(String playerName) {
-		this.playerName = playerName;
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
 	public String getPassword() {
@@ -24,7 +30,6 @@ public class AuthenticationRequest {
 
 	public void setPassword(String password) {
 		this.password = password;
-	}
-	
+	}	
 	
 }
