@@ -1,7 +1,7 @@
 # M15SpringRESTAPIMongoDBJWTAuth
 
 ## Description
-REST API that simulates a dice game where players roll 2 dice in each roll, if the outcome is 7 then it is a Win, otherwise it is a Loss. Also manages the ranking of all the players (including the "anonymoues ones) with all CRUD functionalities. Security is applied in a different branch of the project. Data is persisted through MongoDB with referenced documents, the initial data has been loaded from the Main application, although it could have been loaded from a Runner class.
+REST API that simulates a dice game where players roll 2 dice in each roll, if the outcome is 7 then it is a Win, otherwise it is a Loss. Also manages the ranking of all the players (including the "anonymous ones) with all CRUD functionalities. Security is applied in a different branch of the project. Data is persisted through MongoDB with referenced documents, the initial data has been loaded from the Main application class, although it could have been loaded from a Runner class.
 
 ## Branches
 Two different branches in this project:
